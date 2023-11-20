@@ -1,0 +1,174 @@
+body {
+  margin: 0;
+  padding: 0;
+  font-family: "Arial", sans-serif;
+  background-color: #f1f8ff;
+  color: #2d3a3a;
+  overflow-x: hidden;
+}
+
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #2d3a3a;
+  color: #f1f8ff;
+  padding: 20px 20px;
+}
+
+#login-btn {
+  font-weight: bolder;
+  font-size: 18px;
+  text-decoration: none;
+  color: #fff;
+  background-color: #5cbf99;
+  padding: 8px 16px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease-in-out;
+}
+#login-btn:hover {
+  background-color: #4ca588;
+}
+#profile-btn {
+  font-weight: bolder;
+  font-size: 18px;
+  text-decoration: none;
+  color: #fff;
+  background-color: #499175;
+  padding: 8px 16px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease-in-out;
+}
+
+#profile-btn:hover {
+  background-color: #4ca588;
+}
+.logo {
+  font-size: 1.5rem;
+  cursor: pointer;
+}
+
+.auth-section button {
+  background-color: #5cbf99;
+  color: #f1f8ff;
+  padding: 8px 16px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.auth-section button:hover {
+  background-color: #4ca588;
+}
+
+main {
+  padding: 45px;
+  text-align: center;
+  background-color: #eaf6f6;
+  color: #f76c6c;
+  font-size: 17px;
+}
+
+main h1 {
+  font-size: 2.5em;
+  margin-bottom: 20px;
+  color: #3c8b8b;
+}
+
+main p {
+  font-size: 1.2em;
+  color: #575757;
+}
+
+main {
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+}
+
+main:hover {
+  transform: scale(1.01);
+  transition: transform 0.3s ease-in-out;
+}
+
+input[type="file"] {
+  display: none;
+}
+
+#imageInputLabel {
+  display: inline-block;
+  background-color: #4ca588;
+  color: #fff;
+  padding: 10px 20px;
+  cursor: pointer;
+  border-radius: 4px;
+  margin-bottom: 20px;
+}
+
+#croppedImageContainer {
+  margin: 20px auto;
+  max-width: 100%;
+  overflow: hidden;
+}
+
+#uploadButton {
+  background-color: #4ca588;
+  color: #fff;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+#uploadButton:hover {
+  background-color: #3d8c6e;
+}
+@media only screen and (max-width: 768px) {
+  main {
+    padding: 30px;
+  }
+
+  main h1 {
+    font-size: 2em;
+    margin-bottom: 15px;
+  }
+
+  main p {
+    font-size: 1em;
+  }
+
+  #login-btn {
+    font-size: 18px;
+    padding: 13px;
+  }
+  #imageInputLabel {
+    padding: 8px 16px;
+    margin-bottom: 15px;
+  }
+
+  #uploadButton {
+    padding: 8px 16px;
+  }
+}
+
+@media only screen and (max-width: 480px) {
+  main {
+    padding: 20px;
+  }
+
+  main h1 {
+    font-size: 1.5em;
+    margin-bottom: 10px;
+  }
+
+  main p {
+    font-size: 0.9em;
+  }
+
+  #login-btn {
+    font-size: 18px;
+    padding: 13px;
+  }
+}

@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Your Profile</title>
+    <link rel="stylesheet" href="/css/style.css" />
+    <style>
+      body {
+        margin: 0;
+        padding: 0;
+        font-family: "Arial", sans-serif;
+        background-color: #f1f8ff;
+        color: #2d3a3a;
+        overflow-x: hidden;
+      }
+
+      header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        background-color: #2d3a3a;
+        color: #f1f8ff;
+        padding: 10px 20px;
+      }
+
+      .logo {
+        font-size: 1.5rem;
+        cursor: pointer;
+      }
+
+      main {
+        padding: 45px;
+        text-align: center;
+        background-color: #eaf6f6;
+        color: #f76c6c;
+        font-size: 17px;
+        transition: background-color 0.3s ease-in-out;
+      }
+
+      main:hover {
+        background-color: #d9edf7;
+      }
+
+      main h1 {
+        font-size: 2.5em;
+        margin-bottom: 20px;
+        color: #3c8b8b;
+      }
+
+      main p {
+        font-size: 1.2em;
+        color: #575757;
+      }
+
+      .profile-section {
+        background-color: #eaf6f6;
+        padding: 20px;
+        margin-top: 20px;
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+        transition: background-color 0.3s ease-in-out;
+      }
+
+      .profile-section:hover {
+        background-color: #c9f0d8;
+      }
+
+      .profile-details {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+      }
+
+      .profile-image {
+        width: 150px;
+        height: 150px;
+        border-radius: 50%;
+        margin-bottom: 10px;
+        background-color: #4ca588;
+      }
+
+      .profile-name {
+        font-size: 1.5em;
+        margin-bottom: 10px;
+        color: #3c8b8b;
+      }
+
+      .profile-email {
+        font-size: 1.2em;
+        color: #575757;
+      }
+      .home-button {
+        display: inline-block;
+        padding: 10px 20px;
+        margin-top: 10px;
+        background-color: #4ca588;
+        color: #ffffff;
+        text-decoration: none;
+        border-radius: 4px;
+        transition: background-color 0.3s ease-in-out;
+      }
+
+      .home-button:hover {
+        background-color: #3d8c6e;
+      }
+      .image-gallery {
+        margin-top: 20px;
+      }
+
+      .image-gallery h2 {
+        font-size: 1.8em;
+        color: #3c8b8b;
+        margin-bottom: 10px;
+      }
+
+      #imageGallery {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        justify-content: center;
+      }
+
+      #imageGallery img {
+        border-radius: 8px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        transition: transform 0.3s ease-in-out;
+        cursor: pointer;
+        margin: 10px;
+      }
+
+      #imageGallery img:hover {
+        transform: scale(1.1);
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <div class="logo">GalleryGreet</div>
+    </header>
+
+    <main>
+      <h1>Welcome to Your Profile</h1>
+      <p>View your profile details below:</p>
+
+      <div class="profile-section">
+        <div class="profile-details">
+          <div class="profile-image">
+            <img
+              src="<%= pic %>"
+              style="
+                width: 100%;
+                height: 100%;
+                border-radius: 50%;
+                object-fit: contain;
+              "
+            />
+          </div>
+          <div class="profile-name"><%= name %></div>
+          <div class="profile-email"><%= email %></div>
+        </div>
+      </div>
+      <div class="image-gallery">
+        <h2>Your Image Gallery</h2>
+        <div id="imageGallery"></div>
+      </div>
+      <a href="/" class="home-button">Go to Home Page</a>
+    </main>
+    <script>
+      document.addEventListener("DOMContentLoaded", async function () {
+        const response = await fetch("/images");
+        const images = await response.json();
+        console.log(images);
+        if (images.length === 0) {
+          imageGallery.innerHTML =
+            "<p>Start editing your image now by uploading something!</p>";
+        } else {
+          images.forEach((image) => {
+            const imgElement = document.createElement("img");
+            imgElement.src = image.dataUrl;
+            imgElement.alt = "User Image";
+            imgElement.style.width = "400px";
+            imgElement.style.height = "300px";
+            imgElement.style.objectFit = "fill";
+            imageGallery.appendChild(imgElement);
+          });
+        }
+      });
+    </script>
+  </body>
+</html>

@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Image Gallery App</title>
+    <link rel="stylesheet" href="css/style.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.6.1/cropper.min.css"
+      integrity="sha512-hvNR0F/e2J7zPPfLC9auFe3/SE0yG4aJCOd/qxew74NN7eyiSKjr7xJJMu1Jy2wf7FXITpWS1E/RY8yzuXN7VA=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+  </head>
+  <body>
+    <header>
+      <div class="logo">GalleryGreet</div>
+      <div class="auth-section" id="authSection">
+        <% if (authenticated) { %>
+        <a id="profile-btn" href="/login">Profile</a>
+        <% } else { %>
+        <a id="login-btn" href="/signin">Login</a>
+        <% } %>
+      </div>
+    </header>
+    <main>
+      <h1>Welcome to the Image Gallery App</h1>
+      <label id="imageInputLabel" for="imageInput">Choose Image</label>
+      <input type="file" id="imageInput" accept="image/*" />
+      <div id="selectedImageContainer"></div>
+      <div id="croppedImageContainer"></div>
+      <button id="uploadButton">Crop</button>
+    </main>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.6.1/cropper.min.js"
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    ></script>
+    <script>
+      var cropper;
+      var image_ip = document.getElementById("imageInput");
+      var result_cont = document.getElementById("selectedImageContainer");
+      var crop_btn = document.getElementById("uploadButton");
+      var cropped_image = document.getElementById("croppedImageContainer");
+      image_ip.addEventListener("change", (e) => {
+        if (e.target.files.length) {
+          const reader = new FileReader();
+          reader.onload = (e) => {
+            if (e.target.result) {
+              let img = document.createElement("img");
+              img.id = "image";
+              img.src = e.target.result;
+              img.width = 500;
+              img.height = 500;
+              result_cont.innerHTML = "";
+              result_cont.appendChild(img);
+              cropper = new Cropper(img);
+            }
+          };
+          reader.readAsDataURL(e.target.files[0]);
+        }
+      });
+      crop_btn.addEventListener("click", async (e) => {
+        e.preventDefault();
+        let img_canvas = cropper.getCroppedCanvas({
+          width: 300,
+          height: 300,
+        });
+        let img_cropped = img_canvas.toDataURL();
+        console.log(img_cropped);
+        try {
+          const response = await fetch("/upload", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ imageData: img_cropped }),
+          });
+
+          if (response.ok) {
+            console.log("Image uploaded successfully!");
+          } else {
+            console.error("Failed to upload image.");
+          }
+        } catch (error) {
+          console.error("Error uploading image:", error);
+        }
+        let img2 = new Image();
+        img2.id = "image2";
+        img2.src = img_cropped;
+        img2.height = img_canvas.height;
+        img2.width = img_canvas.width;
+        console.log(img_cropped);
+        if (cropped_image) {
+          cropped_image.innerHTML = "";
+          cropped_image.appendChild(img2);
+        } else {
+          console.error("Error: 'cropped_image' div not found.");
+        }
+      });
+    </script>
+  </body>
+</html>
